@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import pickle
 import base64
+import gdown
 import os  # ← untuk cek file lokal
 
 # === Streamlit UI config ===
@@ -25,34 +26,14 @@ else:
 # === Navigation Tab ===
 nav = st.radio("", ["Home", "Genre", "Actor", "Watchlist"], horizontal=True)
 
-# === Download movie_data.pkl dari Google Drive jika belum ada ===
-def download_file_from_google_drive(file_id, destination):
-    URL = "https://drive.google.com/file/d/1BNr0_2ypf0GCqzN6_43HhoLKx0caGaD5/view?usp=sharing"
-    session = requests.Session()
-    response = session.get(URL, params={'id': file_id}, stream=True)
-
-    def get_confirm_token(response):
-        for key, value in response.cookies.items():
-            if key.startswith('download_warning'):
-                return value
-        return None
-
-    token = get_confirm_token(response)
-    if token:
-        params = {'id': file_id, 'confirm': token}
-        response = session.get(URL, params=params, stream=True)
-
-    with open(destination, "wb") as f:
-        for chunk in response.iter_content(32768):
-            if chunk:
-                f.write(chunk)
-
-# Ganti ID ini dengan ID file Google Drive-mu
+# ID Google Drive file
 file_id = "1BNr0_2ypf0GCqzN6_43HhoLKx0caGaD5"
+gdrive_url = f"https://drive.google.com/file/d/1BNr0_2ypf0GCqzN6_43HhoLKx0caGaD5/view?usp=sharing{file_id}"
 destination = "movie_data.pkl"
 
 if not os.path.exists(destination):
-    download_file_from_google_drive(file_id, destination)
+    gdown.download(gdrive_url, destination, quiet=False)
+
 
 # Load movie data & similarity matrix
 with open(destination, 'rb') as file:
