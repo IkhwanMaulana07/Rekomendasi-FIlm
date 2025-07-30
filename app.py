@@ -57,7 +57,7 @@ def fetch_poster(movie_id):
         return ""
 
 # === Content-based recommendation ===
-def get_recommendations(title, cosine_sim=cosine_sim):
+def get_recommendations(title, cosine_sim):  # ✅ ini benar
     idx = movies[movies['title'] == title].index[0]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:11]
@@ -199,6 +199,9 @@ if nav == "Home":
             st.stop()
     else:
         all_movies = movies[['title', 'movie_id']]
+        
+        selected_title = all_movies.iloc[0]['title']  # Ambil judul pertama sebagai contoh
+        recommendations = get_recommendations(selected_title, cosine_sim)
 
     for i in range(0, len(all_movies), cols_per_row):
         cols = st.columns(cols_per_row)
