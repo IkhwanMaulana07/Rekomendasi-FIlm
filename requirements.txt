@@ -1,0 +1,6 @@
+pandas
+astor  # untuk evaluasi literal, meskipun tidak wajib jika hanya pakai ast.literal_eval
+scikit-learn
+streamlit
+requests
+numpy
