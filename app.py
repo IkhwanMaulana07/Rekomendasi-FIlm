@@ -28,7 +28,7 @@ nav = st.radio("", ["Home", "Genre", "Actor", "Watchlist"], horizontal=True)
 
 # ID Google Drive file
 file_id = "1BNr0_2ypf0GCqzN6_43HhoLKx0caGaD5"
-gdrive_url = f"https://drive.google.com/file/d/1BNr0_2ypf0GCqzN6_43HhoLKx0caGaD5/view?usp=sharing{file_id}"
+gdrive_url = f"https://drive.google.com/uc?id={file_id}"
 destination = "movie_data.pkl"
 
 if not os.path.exists(destination):
