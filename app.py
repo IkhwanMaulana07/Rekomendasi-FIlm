@@ -42,6 +42,16 @@ try:
 except Exception as e:
     import traceback
     traceback.print_exc()
+    st.error("Gagal memuat data film. Pastikan file 'movie_data.pkl' valid dan tersedia.")
+    movies = None
+    cosine_sim = None
+    
+if movies is not None:
+    all_movies = movies[['title', 'movie_id']]
+    # lanjut proses
+else:
+    st.error("Data film tidak tersedia.")
+
 
 # === Caching fetch_poster ===
 @st.cache_data(show_spinner=False)
