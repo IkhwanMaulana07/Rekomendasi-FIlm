@@ -36,8 +36,12 @@ if not os.path.exists(destination):
 
 
 # Load movie data & similarity matrix
-with open(destination, 'rb') as file:
-    movies, cosine_sim = pickle.load(file)
+try:
+    with open("movie_data.pkl", "rb") as file:
+        movies, cosine_sim = pickle.load(file)
+except Exception as e:
+    import traceback
+    traceback.print_exc()
 
 # === Caching fetch_poster ===
 @st.cache_data(show_spinner=False)
